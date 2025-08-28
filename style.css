@@ -1,0 +1,875 @@
+:root{
+  --bg:#0a0f1c;
+  --panel:#0e1526;
+  --card:#111a2e;
+  --text:#e6e9ef;
+  --muted:#9aa3b2;
+  --line:#1b2741;
+  --accent1:#ef4444;
+  --accent2:#2563eb;
+  --good:#10b981;
+  --warn:#f59e0b;
+  --footer:#050a14;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:radial-gradient(80% 120% at 0% 0%, #0a0f1c 0%, #0b1220 60%, #0b1220 100%);color:var(--text);font-family:Arial,Helvetica,sans-serif;}
+.topbar{position:sticky; top:0; z-index:20; display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center; padding:10px 16px; background:linear-gradient(90deg, rgba(239,68,68,.95), rgba(37,99,235,.95)); box-shadow:0 14px 36px rgba(0,0,0,.25);}
+.brand-left{display:flex;align-items:center;gap:10px}
+.brand-left img{width:200px;height:auto;border-radius:6px;background:rgba(255,255,255,0.08);padding:6px}
+.brand-center{ text-align:center; line-height:1.2}
+.brand-center .name{font-weight:900;font-size:18px}
+.brand-center .meta{font-size:12px;opacity:.95}
+.brand-right{display:flex;flex-direction:column;align-items:flex-end;font-size:12px}
+.brand-right .currency{opacity:.95}
+.wrap{display:flex;gap:18px;max-width:1300px;margin:18px auto;padding:0 14px}
+.sidebar{width:260px}
+nav{background:rgba(255,255,255,0.04);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.06);padding:12px;border-radius:14px}
+.nav-btn{display:block;width:100%;text-align:left;padding:10px 12px;margin-bottom:8px;border:none;border-radius:10px;background:transparent;color:var(--text);cursor:pointer;font-weight:800;transition:.2s}
+.nav-btn:hover{background:rgba(255,255,255,0.06)}
+.nav-btn.active{background:linear-gradient(90deg,rgba(239,68,68,.9),rgba(37,99,235,.9));box-shadow:0 8px 22px rgba(37,99,235,.25)}
+.small{font-size:12px}
+.file input{display:none}
+.content{flex:1;min-height:calc(100vh - 190px); display:flex; flex-direction:column}
+.main-card{flex:1; overflow:auto}
+.card{background:rgba(255,255,255,0.04);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:16px;box-shadow:0 16px 40px rgba(0,0,0,.22);margin-bottom:14px}
+.grid{display:grid;gap:12px}
+.cols-3{grid-template-columns:repeat(3,1fr)}
+.cols-4{grid-template-columns:repeat(4,1fr)}
+.kpi{padding:14px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));min-height:90px;display:flex;flex-direction:column;justify-content:center}
+.kpi .title{font-size:12px;color:var(--muted);font-weight:700}
+.kpi .value{font-size:22px;font-weight:900;margin-top:6px}
+.low-box{background:linear-gradient(180deg, rgba(245,158,11,0.15), rgba(245,158,11,0.06)); border:1px solid rgba(245,158,11,0.25)}
+.table{width:100%;border-collapse:collapse;margin-top:10px}
+.table th,.table td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
+.table th{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.table tfoot td{font-weight:900}
+.form-row{display:flex;gap:12px;align-items:end;flex-wrap:wrap}
+.field{flex:1;min-width:140px}
+label{font-size:12px;color:var(--muted);display:block;margin-bottom:6px}
+.input,select,textarea{width:100%;padding:10px;background:#0a0f1c;border:1px solid var(--line);border-radius:10px;color:var(--text)}
+.btn{padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:#0b1220;color:var(--text);cursor:pointer;font-weight:800}
+.btn.primary{background:linear-gradient(90deg,rgba(239,68,68,.95),rgba(37,99,235,.95));border:none}
+.btn.ghost{background:transparent}
+.btn.danger{background:#7f1d1d;border-color:#7f1d1d}
+.calc-modal{position:fixed;right:20px;bottom:90px;background:#0b1220;border:1px solid var(--line);padding:12px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.4);width:260px}
+.calc-display{background:#071022;padding:8px;border-radius:6px;margin-bottom:8px;color:var(--text);text-align:right;font-weight:800}
+.footer-bar{
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--footer);
+  color: var(--muted);
+  border-top: 1px solid #0e172a;
+  z-index: 50;
+
+  font-size: 12px;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.footer-bar .left{justify-self:start;}
+.footer-bar .center{justify-self:center; text-align:center; display:flex; align-items:center; gap:6px;}
+.footer-bar .right{justify-self:end; text-align:right;}
+.footer-bar .center img{height:1em; width:auto; vertical-align:middle;}
+
+.footer-bar .left{flex:1}
+.footer-bar .right{opacity:0.9}
+.login-wrap{max-width:420px;margin:12vh auto;padding:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.login-wrap h2{margin-top:0}
+.badge{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);background:rgba(0,0,0,0.06);font-size:12px}
+@media(max-width:1024px){.wrap{flex-direction:column}.sidebar{width:100%}.brand-center .name{font-size:16px}}
+@media print{body{background:#fff;color:#000}.topbar,.sidebar,.footer-bar{
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--footer);
+  color: var(--muted);
+  border-top: 1px solid #0e172a;
+  z-index: 50;
+
+  font-size: 12px;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.footer-bar .left{justify-self:start;}
+.footer-bar .center{justify-self:center; text-align:center; display:flex; align-items:center; gap:6px;}
+.footer-bar .right{justify-self:end; text-align:right;}
+.footer-bar .center img{height:1em; width:auto; vertical-align:middle;}
+.card{box-shadow:none;border:none}}
+
+.value.smallval{font-size:16px;font-weight:400}
+.autocomplete{position:absolute;background:#fff;color:#000;border-radius:6px;box-shadow:0 6px 16px rgba(0,0,0,.35);z-index:1000;}
+.ac-item{padding:6px 10px;cursor:pointer}
+.ac-item:hover{background:#f2f2f2}
+.footer-bar .center{flex:1;display:flex;align-items:center;justify-content:center;text-align:center}
+.powered img{filter:drop-shadow(0 0 0 transparent)}
+
+
+/* Hover zoom effects */
+.sidebar .nav-btn{
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.sidebar .nav-btn:hover{
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 4px 18px rgba(0,0,0,.25);
+}
+.dashboard-page .card{
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.dashboard-page .card:hover{
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 24px rgba(0,0,0,.25);
+}
+
+
+/* Hover effect for dashboard stat/info boxes */
+.dashboard-box, .todays-sales, .todays-cost, .todays-profit,
+.fast-moving, .sales-mix, .weekly-vs-profit, .low-stock,
+.weekly-sales, .weekly-profit, .monthly-sales, .monthly-profit {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.dashboard-box:hover, .todays-sales:hover, .todays-cost:hover, .todays-profit:hover,
+.fast-moving:hover, .sales-mix:hover, .weekly-vs-profit:hover, .low-stock:hover,
+.weekly-sales:hover, .weekly-profit:hover, .monthly-sales:hover, .monthly-profit:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+
+
+/* Hover effect for dashboard stat/info boxes */
+.dashboard-box, .todays-sales, .todays-cost, .todays-profit,
+.fast-moving, .sales-mix, .weekly-vs-profit, .low-stock,
+.weekly-sales, .weekly-profit, .monthly-sales, .monthly-profit {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.dashboard-box:hover, .todays-sales:hover, .todays-cost:hover, .todays-profit:hover,
+.fast-moving:hover, .sales-mix:hover, .weekly-vs-profit:hover, .low-stock:hover,
+.weekly-sales:hover, .weekly-profit:hover, .monthly-sales:hover, .monthly-profit:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  z-index: 5;
+  position: relative;
+}
+
+
+
+/* Hover zoom effect for dashboard boxes */
+.dashboard-box, .todays-sales, .todays-cost, .todays-profit,
+.fast-moving, .sales-mix, .weekly-vs-profit, .low-stock,
+.weekly-sales, .weekly-profit, .monthly-sales, .monthly-profit {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.dashboard-box:hover, .todays-sales:hover, .todays-cost:hover, .todays-profit:hover,
+.fast-moving:hover, .sales-mix:hover, .weekly-vs-profit:hover, .low-stock:hover,
+.weekly-sales:hover, .weekly-profit:hover, .monthly-sales:hover, .monthly-profit:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  z-index: 5;
+  position: relative;
+}
+
+
+/* Visual Rs. prefix on inputs without affecting value */
+.input.currency-lkr { padding-left: 34px; background-repeat: no-repeat; background-position: 8px center; }
+.input.currency-lkr { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='18'><text x='0' y='14' font-family='Inter, Arial' font-size='12' fill='%23888'>Rs.</text></svg>"); }
+
+/* Invoice form alignment */
+.invoice-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.invoice-row label {
+  min-width: 100px;
+  text-align: right;
+}
+.invoice-row input {
+  flex: 1;
+  padding: 4px;
+}
+/* Center buttons */
+.button-row {
+  text-align: center;
+  margin-top: 12px;
+}
+.button-row button {
+  margin: 0 5px;
+}
+
+
+/* ==== Customer Invoice layout improvements ==== */
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+.field { width: 100%; }
+.field > label { display: block; width: 100%; font-weight: 600; color: var(--text); }
+.field .input, .field select, .field input, .field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  outline: none;
+}
+/* Mobile: 1 column */
+@media (max-width: 720px) {
+  .form-row { grid-template-columns: 1fr; }
+}
+/* Center action buttons under the invoice box */
+.invoice-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 12px;
+  width: 100%;
+}
+
+
+/* Hover zoom effect for all buttons */
+.btn {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+
+/* FIXED: Smooth hover zoom for all buttons */
+.btn,
+.btn.primary,
+.btn.ghost,
+.btn.danger {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.btn:hover,
+.btn.primary:hover,
+.btn.ghost:hover,
+.btn.danger:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+
+/* More spacing between form fields */
+.form-row {
+  gap: 18px;        /* increased from 12px */
+  margin-bottom: 14px;  /* add bottom margin for rows */
+}
+
+.field {
+  margin-bottom: 10px;  /* extra spacing between stacked fields */
+}
+
+
+/* Rs. prefix for all currency inputs */
+.input.currency-lkr {
+  padding-left: 34px;
+  background-repeat: no-repeat;
+  background-position: 8px center;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='18'><text x='0' y='14' font-size='14' fill='white'>Rs.</text></svg>");
+}
+
+
+/* Match Rs. prefix font with input font */
+.input.currency-lkr {
+  padding-left: 34px;
+  background-repeat: no-repeat;
+  background-position: 8px center;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18'><text x='0' y='14' font-size='14' font-family='Arial, Helvetica, sans-serif' fill='white'>Rs.</text></svg>");
+}
+
+
+/* Customer Invoice action buttons */
+.invoice-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;       /* more spacing between buttons */
+  margin-top: 16px;
+}
+
+.invoice-actions .btn {
+  min-width: 100px;  /* wider buttons */
+  text-align: center;
+}
+
+
+/* Autocomplete suggestions (Inventory search) */
+.suggestions{
+  position:absolute;
+  top:100%;
+  left:0;
+  background:#111827; /* dark slate */
+  color:#fff;
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:8px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.35);
+  margin-top:6px;
+  min-width:220px;
+  max-height:220px;
+  overflow:auto;
+  display:none;
+  z-index:2000;
+}
+.suggestion-item{
+  padding:8px 12px;
+  font-size:14px;
+  line-height:1.2;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  cursor:pointer;
+}
+.suggestion-item:hover{
+  background:#1f2937;
+}
+
+/* === Inventory results compact fonts (10px) === */
+.inventory-table,
+.inventory-table td,
+.inventory-table th,
+.results,
+.results div,
+.results .result-item,
+.inventory-results,
+.inventory-results td,
+.inventory-results th {
+  font-size: 10px !important;
+}
+
+
+/* ==== Product Name dropdown (autocomplete) — dark blue + hover ==== */
+.autocomplete[data-for="p_name"] {
+  background-color: #111826 !important; /* custom dark color */
+  color: #ffffff !important;            /* white text */
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+  overflow: hidden;
+  z-index: 1000;
+}
+.autocomplete[data-for="p_name"] .ac-item {
+  padding: 8px 10px;
+  color: #ffffff !important;
+  background: transparent;
+  cursor: pointer;
+}
+.autocomplete[data-for="p_name"] .ac-item:hover {
+  background-color: #1f2936 !important; /* custom hover color */
+  color: #ffffff !important;
+}
+
+
+/* ==== Product Name dropdown styling FINAL ==== */
+#p_name {
+  background-color: #111826 !important;
+  color: #ffffff !important;
+  border: 1px solid #1f2936;   /* outline color */
+  border-radius: 6px;          /* slightly rounded corners */
+  font-weight: 600;
+}
+
+#p_name option {
+  background-color: #111826;
+  color: #ffffff;
+}
+
+/* Hover / selected state */
+#p_name option:hover,
+#p_name option:checked,
+#p_name option:focus {
+  background-color: #1f2936 !important;
+  color: #ffffff;
+}
+
+
+/* Added automatically: hide product name list */
+#p_name_list {
+  visibility: hidden;
+}
+
+
+/* ==== Mobile Navigation Toggle ==== */
+.menu-toggle {
+  display: none;
+}
+
+#nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+    background: #004080;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 10px;
+  }
+
+  #nav-links {
+    display: none;
+    flex-direction: column;
+    background: #004080;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+  }
+
+  #nav-links.show {
+    display: flex;
+  }
+
+  #nav-links a {
+    color: #fff;
+    padding: 10px;
+    text-decoration: none;
+  }
+}
+
+
+/* ==== Mobile Navigation Toggle (Fixed) ==== */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .sidebar.show {
+    display: block;
+  }
+
+  .menu-toggle {
+    display: block;
+    width: 100%;
+    background: #004080;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+  }
+}
+
+
+/* === Final Permanent Fix for Dark Dropdowns === */
+/* Customer Invoice → Customer field */
+#c_sel,
+#c_sel option {
+  background-color: #0b1220 !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+/* Purchase Management → Product field */
+#pu_sel,
+#pu_sel option {
+  background-color: #0b1220 !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+
+/* Quotation print preview card */
+.print-sheet { background: rgba(255,255,255,0.04); padding: 12px; border-radius: 12px; }
+.q-header { display:flex; justify-content:space-between; align-items:center; gap: 10px; margin-bottom: 8px; }
+.q-left { display:flex; align-items:center; gap: 10px; }
+.q-name { font-size: 16px; font-weight: 900; }
+.q-meta { font-size: 12px; color: var(--muted); }
+.q-to { margin: 6px 0 10px 0; }
+.q-notes { margin-top: 8px; }
+@media print {
+  @page { size: A5; margin: 8mm; }
+  .topbar, .sidebar, .footer-bar { display:none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  .card { box-shadow: none !important; border: none !important; }
+}
+
+
+/* Custom styled dropdowns */
+select.input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 28px 6px 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23007bff' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  background-size: 16px 16px;
+}
+
+select.input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+
+/* === Final Icon button styles (25px icons, 20px gap) === */
+.action-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.icon-btn {
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.icon-btn.edit { background: #2563eb; color: #fff; }
+.icon-btn.delete { background: #ef4444; color: #fff; }
+.icon-btn:hover { transform: scale(1.2); box-shadow: 0 4px 10px rgba(0,0,0,0.25); }
+.icon-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+
+/* === Global table font size for all POS tables (12px) === */
+table th, table td {
+  font-size: 12px !important;
+  padding: 6px 8px;
+}
+
+/* Ensure invoice/quotation icons same style as inventory */
+.action-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.icon-btn {
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.icon-btn.edit { background: #2563eb; color: #fff; }
+.icon-btn.delete { background: #ef4444; color: #fff; }
+.icon-btn:hover { transform: scale(1.2); box-shadow: 0 4px 10px rgba(0,0,0,0.25); }
+.icon-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+.action-btn {
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 4px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.action-btn.edit {
+  background-color: #2563eb; /* blue */
+}
+
+.action-btn.delete {
+  background-color: #dc2626; /* red */
+}
+
+/* Unified action buttons */
+.action-btn {
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 4px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.action-btn.edit {
+  background-color: #2563eb; /* blue */
+}
+
+.action-btn.delete {
+  background-color: #dc2626; /* red */
+}
+
+/* Unified action buttons across Invoice & Inventory */
+.action-btn {
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 4px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.action-btn.edit {
+  background-color: #2563eb; /* blue */
+}
+
+.action-btn.delete {
+  background-color: #dc2626; /* red */
+}
+
+.action-btn i {
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Enlarged unified action buttons */
+.action-btn {
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 4px;
+  color: #fff;
+  font-size: 16px;
+}
+
+.action-btn.edit {
+  background-color: #2563eb; /* blue */
+}
+
+.action-btn.delete {
+  background-color: #dc2626; /* red */
+}
+
+.action-btn i {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* === Unified Action Icon Buttons === */
+.action-icons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  background: rgba(255,255,255,0.06);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.2s;
+}
+.icon-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: white;
+}
+.icon-btn.edit:hover {
+  background: #2563eb;
+  box-shadow: 0 0 10px rgba(37,99,235,0.6);
+}
+.icon-btn.delete:hover {
+  background: #ef4444;
+  box-shadow: 0 0 10px rgba(239,68,68,0.6);
+}
+
+/* === Unified Round Action Buttons (no icons) === */
+.action-icons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.2s;
+}
+.icon-btn.edit {
+  background: #2563eb;
+}
+.icon-btn.delete {
+  background: #ef4444;
+}
+.icon-btn.edit:hover {
+  box-shadow: 0 0 10px rgba(37,99,235,0.6);
+  transform: scale(1.08);
+}
+.icon-btn.delete:hover {
+  box-shadow: 0 0 10px rgba(239,68,68,0.6);
+  transform: scale(1.08);
+}
+
+
+/* === Updated Button Size and Gap === */
+.action-icons {
+  display: flex;
+  gap: 20px; /* gap between buttons */
+  justify-content: center;
+}
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.2s;
+}
+.icon-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: white;
+}
+
+/* ==== Fix dropdown styling for Customer & Product Name ==== */
+select,
+select option {
+  background-color: #111826 !important; /* dropdown background */
+  color: #ffffff !important;            /* text color */
+}
+
+select option:hover,
+select option:focus,
+select option:checked {
+  background-color: #1F2936 !important; /* hover / selected background */
+  color: #ffffff !important;            /* hover / selected text */
+}
+
+
+
+/* Center and widen Login button */
+.login-wrap .btn.primary{ display:block; margin:0 auto; text-align:center; min-width:160px; }
+
+/* Manage Users tile */
+.um-card .um-header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
+.um-card .um-header .name{ font-weight:900; font-size:16px; }
+.um-card .um-header .meta{ color:var(--muted); }
+.um-card .um-actions .btn{ min-width:140px; }
+
+/* Simple modal */
+.modal{ position:fixed; inset:0; background:rgba(0,0,0,.55); display:none; align-items:center; justify-content:center; z-index:2000; }
+.modal.show{ display:flex; }
+.modal .panel{ width:min(520px,92vw); background:#0b1220; border:1px solid var(--line); border-radius:14px; padding:16px; box-shadow:0 20px 60px rgba(0,0,0,.5); }
+.um-modal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+
+
+
+/* Manage Users polished */
+.um-card{ margin-top:20px; }
+.um-card .um-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.um-card .um-header .name{ font-weight:900; font-size:16px; }
+.um-card .um-header .meta{ color:var(--muted); font-size:12px; }
+.um-card table{ width:100%; border-collapse:collapse; margin-top:10px; }
+.um-card th, .um-card td{ padding:8px 10px; text-align:left; border-bottom:1px solid var(--line); }
+.badge{ padding:2px 8px; border-radius:10px; font-size:12px; font-weight:600; }
+.badge-admin{ background:#1e3a8a; color:#fff; }
+.badge-cashier{ background:#065f46; color:#fff; }
+
+.btn.small{ padding:3px 8px; font-size:12px; border-radius:6px; }
+.btn.warn{ background:#f97316; color:#fff; }
+.btn.warn:hover{ opacity:0.9; }
+.btn.danger{ background:#dc2626; color:#fff; }
+.btn.danger:hover{ opacity:0.9; }
+
+/* Modal styling already included before */
+
+
+/* Hide old Manage Users table + reset */
+#user_list,
+#reset_user_pw {
+  display: none !important;
+}
+h4 + #user_list,
+h4:has(+ #user_list) {
+  display: none !important;
+}
+
+
+/* === Alignment Consistency Fix === */
+
+/* Tile headings uniform */
+.card h2, .tile h2, .module-box h2,
+.card h3, .tile h3, .module-box h3 {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  margin-top: 0 !important;
+  margin-bottom: 20px !important; /* consistent heading to fields gap */
+}
+
+/* Ensure consistent padding inside tiles */
+.card, .tile, .module-box {
+  padding-top: 20px !important;
+}
+
+/* First row inside tile aligned */
+.card .form-row:first-child,
+.tile .form-row:first-child,
+.module-box .form-row:first-child {
+  margin-top: 0 !important;
+}
+
+
+/* === Fix: Uniform gap between tile heading and first row of fields === */
+.card h2 + .form-row, .tile h2 + .form-row, .module-box h2 + .form-row,
+.card h3 + .form-row, .tile h3 + .form-row, .module-box h3 + .form-row {
+  margin-top: 20px !important;
+}
+
+.action-btn.view { background-color:#28a745; color:#fff; }

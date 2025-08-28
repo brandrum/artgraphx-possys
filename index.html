@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ArtGraphX POS Version 7.3</title>
+  <meta name="description" content="ArtGraphX Book Shop & Communication — POS System v3.0 (Offline)" />
+  <link rel="stylesheet" href="style.css" />
+
+    <style>
+    .invoice-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px 30px;
+        align-items: start;
+    }
+    .invoice-form .full-width {
+        grid-column: span 2;
+    }
+    .form-actions {
+        grid-column: span 2;
+        text-align: center;
+        margin-top: 20px;
+    }
+    </style>
+    
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="firebase-bridge.js"></script>
+</head>
+<body>
+<button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+
+
+  <div id="app" data-version="v3.0"></div>
+  <script src="script.js"></script>
+<script>
+  function toggleMenu() {
+    const nav = document.querySelector(".sidebar");
+    if (nav) {
+      nav.classList.toggle("show");
+    }
+  }
+</script>
+</body>
+</html>
+
+
+
+
