@@ -1295,17 +1295,9 @@ function renderInvoice(){
   window._cart = [];
   
   // --- initialize invoice date to today's date (editable for back-dating) ---
-  requestAnimationFrame(()=>{
-    var dInput = document.getElementById('inv_date');
-    if(dInput){
-      var d = new Date();
-      var pad = n => String(n).padStart(2,'0');
-      dInput.value = d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate());
-    }
-  });
-document.getElementById('content').innerHTML = `
+  requestAnimationFrame(()=>{var dInput=document.getElementById('inv_date');if(dInput){  var now=new Date();  var local=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,16);  if(!dInput.value){ dInput.value=local; }  dInput.removeAttribute('readonly');  dInput.removeAttribute('disabled');}});document.getElementById('content').innerHTML = `
     <div class="card">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;"><h3 style="margin:0;">Customer Invoice <span class="badge">Inv # ${invNoPeek}</span></h3><div style="display:flex;align-items:center;gap:6px;"><label for="inv_date" style="font-size:12px;">Date</label><input type="date" id="inv_date" class="input" style="height:32px;padding:4px 8px;border-radius:8px" /></div></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;"><h3 style="margin:0;">Customer Invoice <span class="badge">Inv # ${invNoPeek}</span></h3><div style="display:flex;align-items:center;gap:6px;"><label for="inv_date" style="font-size:12px;">Date</label><input type="datetime-local" id="inv_date" class="input" style="height:32px;padding:4px 8px;border-radius:8px" /></div></div>
       <div class="form-row">
         <div class="field"><label>Customer<select id="c_sel" class="input">${cust.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')}<option value="new">+ New customer</option></select></label></div>
         <div class="field"><label>Customer Name (if new)<input id="c_name" class="input" placeholder="Name"/></label></div>
@@ -1636,7 +1628,7 @@ function drawCart() {
 
     // consume invoice number now
     const invNo = nextInvoiceNo();
-    const sale = { id:uid(), invNo, date: (function(){var el=document.getElementById('inv_date');var v=el&&el.value; return v?new Date(v+'T00:00:00').toISOString():new Date().toISOString();})(), customerId:custId, customerName:custName, items:_cart.map(l=>({id:l.pid,name:l.name,qty:l.qty,price:l.price,disc:l.disc,cost:l.cost,sku:l.sku})), total:grand, discount:totals.disc, costTotal:totals.cost, notes:document.getElementById('notes').value.trim() };
+    const sale = { id:uid(), invNo, date:(function(){var el=document.getElementById('inv_date');var v=el&&el.value;if(v){return new Date(v).toISOString();}return new Date().toISOString();})(), customerId:custId, customerName:custName, items:_cart.map(l=>({id:l.pid,name:l.name,qty:l.qty,price:l.price,disc:l.disc,cost:l.cost,sku:l.sku})), total:grand, discount:totals.disc, costTotal:totals.cost, notes:document.getElementById('notes').value.trim() };
     const sales=db.sales; sales.unshift(sale); db.sales=sales;
     const cash=Number(document.getElementById('cash_given').value||0); const change=Math.max(0,cash-grand);
     alert(`Saved. Change due: ${fmtMoney(change)}. Invoice # ${invNo}`);
@@ -2448,3 +2440,73 @@ function clearPOMForm(){
 
 // Hook up Clear button
 (function(){var _el=document.getElementById('po_clear'); if(_el) _el.addEventListener('click', clearPOMForm);})();
+
+
+
+/* === A5 Invoice Print Template === */
+function renderInvoicePrint(data) {
+  const invoiceHTML = `
+  <div class="invoice-print">
+    <div class="header">
+      <img src="logo_black.png" class="logo"/>
+      <h1>ArtGraphX Book Shop & Communication</h1>
+      <p>No 304/1/1, Manik Agara Rd, Koratota Kaduwela, Sri Lanka, 10640</p>
+      <p>Tel: (+94) 078 630 7700 | Email: artgraphx25@gmail.com</p>
+      <hr/>
+    </div>
+    <div class="meta">
+      <div class="left">
+        <p><strong>Invoice No:</strong> ${data.invNo}</p>
+        <p><strong>Date:</strong> ${data.date}</p>
+        <p><strong>Cashier:</strong> ${data.cashier}</p>
+      </div>
+      <div class="right">
+        <p><strong>Customer:</strong> ${data.customer}</p>
+        <p><strong>Contact:</strong> ${data.contact}</p>
+      </div>
+    </div>
+    <table class="items">
+      <thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead>
+      <tbody>
+        ${data.items.map(it => `<tr><td>${it.name}</td><td>${it.qty}</td><td>${it.price}</td><td>${it.total}</td></tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="summary">
+      <p>Subtotal: ${data.subtotal}</p>
+      <p>Discount: ${data.discount}</p>
+      <p>Tax: ${data.tax}</p>
+      <h2>Grand Total: ${data.total}</h2>
+      <p><strong>Payment:</strong> ${data.payment}</p>
+    </div>
+    <div class="footer">
+      <p>Thank you for your business!</p>
+    </div>
+  </div>
+  <style>
+  @media print {
+    @page { size: A5; margin: 8mm; }
+    body { background: #fff; color: #000; font-family: Arial, sans-serif; }
+    .invoice-print { width: 100%; max-width: 100%; }
+    .invoice-print .header { text-align: center; margin-bottom: 10px; }
+    .invoice-print .header .logo { height: 60px; margin-bottom: 6px; }
+    .invoice-print h1 { margin: 4px 0; font-size: 18px; font-weight: 900; }
+    .invoice-print p { margin: 2px 0; font-size: 12px; }
+    .invoice-print .meta { display: flex; justify-content: space-between; margin: 10px 0; font-size: 12px; }
+    .invoice-print table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .invoice-print th, .invoice-print td { border-bottom: 1px solid #ccc; padding: 4px; text-align: left; }
+    .invoice-print th { background: #f0f0f0; font-weight: 700; }
+    .invoice-print td:nth-child(2),
+    .invoice-print td:nth-child(3),
+    .invoice-print td:nth-child(4) { text-align: right; }
+    .invoice-print .summary { margin-top: 10px; text-align: right; font-size: 12px; }
+    .invoice-print .summary h2 { margin-top: 6px; font-size: 14px; font-weight: 900; }
+    .invoice-print .footer { margin-top: 20px; text-align: center; font-size: 12px; }
+  }
+  </style>
+  `;
+  const w = window.open("", "_blank");
+  w.document.write(invoiceHTML);
+  w.document.close();
+  w.focus();
+  w.print();
+}
